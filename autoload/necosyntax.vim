@@ -55,8 +55,11 @@ function! necosyntax#gather_candidates() "{{{
     call s:make_cache()
   endif
 
-  " Todo: Use context_filetype.
-  let list += s:syntax_list[s:get_context_filetype(ft)]
+  let context_filetype = s:get_context_filetype(ft)
+  if has_key(s:syntax_list, context_filetype)
+    " Todo: Use context_filetype.
+    let list += s:syntax_list[context_filetype]
+  endif
 
   return list
 endfunction"}}}
