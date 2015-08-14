@@ -40,6 +40,10 @@ This source analyzes a syntax file like autoload/syntaxcomplete.vim offered by
 default, and to add to candidate completion.  The plugin can recognize
 candidates a lot more than autoload/syntaxcomplete.vim.
 
+Note: neco-syntax does not support Vim syntax.  Because, neco-vim is better.
+
+https://github.com/Shougo/neco-vim
+
 ==============================================================================
 INSTALL						*necosyntax-install*
 
