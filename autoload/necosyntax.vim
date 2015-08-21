@@ -86,7 +86,8 @@ function! s:make_cache_from_syntax(filetype) "{{{
   endif
 
   let group_name = ''
-  let keyword_pattern = exists('*neocomplete#get_keyword_pattern') ?
+  let keyword_pattern =
+        \ (has('lua') && exists('*neocomplete#get_keyword_pattern')) ?
         \ neocomplete#get_keyword_pattern(a:filetype) : '\h\w*'
 
   let filetype_pattern = tolower(substitute(
