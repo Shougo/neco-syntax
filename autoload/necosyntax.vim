@@ -90,9 +90,6 @@ function! s:make_cache_from_syntax(filetype) "{{{
         \ (has('lua') && exists('*neocomplete#get_keyword_pattern')) ?
         \ neocomplete#get_keyword_pattern(a:filetype) : '\h\w*'
 
-  let filetype_pattern = tolower(substitute(
-        \ matchstr(a:filetype, '[^_]*'), '-', '_', 'g'))
-
   let keyword_list = []
   for line in split(syntax_list, '\n')
     if line =~ '^\h\w\+'
@@ -102,8 +99,7 @@ function! s:make_cache_from_syntax(filetype) "{{{
     endif
 
     if line =~ 'Syntax items' || line =~ '^\s*links to' ||
-          \ line =~ '^\s*nextgroup=' ||
-          \ stridx(tolower(group_name), filetype_pattern) != 0
+          \ line =~ '^\s*nextgroup='
       " Next line.
       continue
     endif
