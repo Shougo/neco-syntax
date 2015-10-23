@@ -33,9 +33,9 @@ class Source(Base):
 
         self.name = 'syntax'
         self.mark = '[S]'
-        self.vim.command('call necosyntax#initialize()')
+        self.vim.call('necosyntax#initialize')
 
     def gather_candidates(self, context):
         return [{ 'word': x } for x in
-                self.vim.eval('necosyntax#gather_candidates()')]
+                self.vim.call('necosyntax#gather_candidates')]
 
