@@ -44,23 +44,19 @@ function! necosyntax#initialize() abort
 endfunction
 
 function! necosyntax#gather_candidates() "{{{
-  let ft = &filetype
-  if ft == ''
+  let filetype = &filetype
+  if filetype == ''
     return []
   endif
 
-  let list = []
-
-  if !has_key(s:syntax_list, ft)
+  if !has_key(s:syntax_list, filetype)
     call s:make_cache()
   endif
 
-  let context_filetype = s:get_context_filetype(ft)
-  if has_key(s:syntax_list, context_filetype)
-    " Todo: Use context_filetype.
-    let list += s:syntax_list[context_filetype]
-  endif
-
+  let list = []
+  for ft in s:get_context_filetypes(filetype)
+    let list += get(s:syntax_list, ft, [])
+  endfor
   return list
 endfunction"}}}
 
@@ -86,9 +82,7 @@ function! s:make_cache_from_syntax(filetype) "{{{
   endif
 
   let group_name = ''
-  let keyword_pattern =
-        \ (has('lua') && exists('*neocomplete#get_keyword_pattern')) ?
-        \ neocomplete#get_keyword_pattern(a:filetype) : '\h\w*'
+  let keyword_pattern = '\h\w*'
 
   let keyword_list = []
   for line in split(syntax_list, '\n')
@@ -263,7 +257,7 @@ function! s:uniq(list) "{{{
   return values(dict)
 endfunction"}}}
 
-function! s:get_context_filetype(filetype) "{{{
+function! s:get_context_filetypes(filetype) "{{{
   if !exists('s:exists_context_filetype')
     try
       call context_filetype#version()
@@ -273,14 +267,9 @@ function! s:get_context_filetype(filetype) "{{{
     endtry
   endif
 
-  let context_filetype =
-        \ s:exists_context_filetype ?
-        \ context_filetype#get_filetype(a:filetype) : a:filetype
-  if context_filetype == ''
-    let context_filetype = 'nothing'
-  endif
-
-  return context_filetype
+  return s:exists_context_filetype
+        \ && exists('*context_filetype#get_filetypes') ?
+        \ context_filetype#get_filetypes(a:filetype) : [a:filetype]
 endfunction"}}}
 
 let &cpo = s:save_cpo
