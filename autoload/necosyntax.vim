@@ -43,7 +43,7 @@ function! necosyntax#initialize() abort
   call s:make_cache()
 endfunction
 
-function! necosyntax#gather_candidates() "{{{
+function! necosyntax#gather_candidates() abort "{{{
   let filetype = &filetype
   if filetype == ''
     return []
@@ -60,7 +60,7 @@ function! necosyntax#gather_candidates() "{{{
   return list
 endfunction"}}}
 
-function! s:make_cache() "{{{
+function! s:make_cache() abort "{{{
   let ft = &filetype
   if ft == '' || ft ==# 'vim' || has_key(s:syntax_list, ft)
     return
@@ -70,7 +70,7 @@ function! s:make_cache() "{{{
   let s:syntax_list[ft] = s:make_cache_from_syntax(ft)
 endfunction"}}}
 
-function! s:make_cache_from_syntax(filetype) "{{{
+function! s:make_cache_from_syntax(filetype) abort "{{{
   " Get current syntax list.
   let syntax_list = ''
   redir => syntax_list
@@ -136,7 +136,7 @@ function! s:make_cache_from_syntax(filetype) "{{{
   return keyword_list
 endfunction"}}}
 
-function! s:substitute_candidate(candidate) "{{{
+function! s:substitute_candidate(candidate) abort "{{{
   let candidate = a:candidate
 
   " Collection.
@@ -162,7 +162,7 @@ function! s:substitute_candidate(candidate) "{{{
   return candidate
 endfunction"}}}
 
-function! necosyntax#_split_pattern(keyword_pattern, prefix) "{{{
+function! necosyntax#_split_pattern(keyword_pattern, prefix) abort "{{{
   let original_pattern = a:keyword_pattern
   let result_patterns = []
   let analyzing_patterns = [ '' ]
@@ -211,7 +211,7 @@ function! necosyntax#_split_pattern(keyword_pattern, prefix) "{{{
   return map(result_patterns, 'a:prefix . v:val')
 endfunction"}}}
 
-function! s:match_pair(string, start_pattern, end_pattern, start_cnt) "{{{
+function! s:match_pair(string, start_pattern, end_pattern, start_cnt) abort "{{{
   let end = -1
   let start_pattern = '\%(' . a:start_pattern . '\)'
   let end_pattern = '\%(' . a:end_pattern . '\)'
@@ -246,7 +246,7 @@ function! s:match_pair(string, start_pattern, end_pattern, start_cnt) "{{{
   endif
 endfunction"}}}
 
-function! s:uniq(list) "{{{
+function! s:uniq(list) abort "{{{
   let dict = {}
   for item in a:list
     if !has_key(dict, item)
@@ -257,7 +257,7 @@ function! s:uniq(list) "{{{
   return values(dict)
 endfunction"}}}
 
-function! s:get_context_filetypes(filetype) "{{{
+function! s:get_context_filetypes(filetype) abort "{{{
   if !exists('s:exists_context_filetype')
     try
       call context_filetype#version()

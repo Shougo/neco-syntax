@@ -1,7 +1,7 @@
 let s:suite = themis#suite('parser')
 let s:assert = themis#helper('assert')
 
-function! s:suite.syntax()
+function! s:suite.syntax() abort
   call s:assert.equals(sort(necosyntax#_split_pattern(
         \ '\(d\|e\|f\)', '')),
         \ ['d', 'e', 'f'])

@@ -39,15 +39,15 @@ let s:source = {
       \ 'hooks' : {},
       \}
 
-function! s:source.hooks.on_init(context) "{{{
+function! s:source.hooks.on_init(context) abort "{{{
   call necosyntax#initialize()
 endfunction"}}}
 
-function! s:source.gather_candidates(context) "{{{
+function! s:source.gather_candidates(context) abort "{{{
   return necosyntax#gather_candidates()
 endfunction"}}}
 
-function! neocomplete#sources#syntax#define() "{{{
+function! neocomplete#sources#syntax#define() abort "{{{
   return s:source
 endfunction"}}}
 
