@@ -8,7 +8,7 @@
 autocmd User CmSetup call cm#register_source({
       \ 'name': 'neco-syntax',
       \ 'abbreviation': 'syntax',
-      \ 'priority': 9,
+      \ 'priority': 8,
       \ 'cm_refresh': 'cm#sources#necosyntax#refresh',
       \ 'cm_refresh_patterns': ['\w\+$'],
       \ })
