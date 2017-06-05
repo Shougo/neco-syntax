@@ -5,20 +5,21 @@
 "=============================================================================
 
 let s:initialized = 0
+
 function! cm#sources#necosyntax#refresh(opt, ctx)
   if !s:initialized
     call necosyntax#initialize()
     let s:initialized = 1
   endif
 
-  let l:col = a:ctx['col']
-  let l:typed = a:ctx['typed']
+  let col = a:ctx['col']
+  let typed = a:ctx['typed']
 
-  let l:kw = matchstr(l:typed, '\w\+$')
-  let l:kwlen = len(l:kw)
+  let kw = matchstr(typed, '\w\+$')
+  let kwlen = len(kw)
 
-  let l:matches = necosyntax#gather_candidates()
-  let l:startcol = l:col - l:kwlen
+  let matches = necosyntax#gather_candidates()
+  let startcol = col - kwlen
 
-  call cm#complete(a:opt.name, a:ctx, l:startcol, l:matches)
+  call cm#complete(a:opt.name, a:ctx, startcol, matches)
 endfunction
