@@ -1,35 +1,11 @@
 "=============================================================================
 " FILE: necosyntax.vim
-" AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" License: MIT license  {{{
-"     Permission is hereby granted, free of charge, to any person obtaining
-"     a copy of this software and associated documentation files (the
-"     "Software"), to deal in the Software without restriction, including
-"     without limitation the rights to use, copy, modify, merge, publish,
-"     distribute, sublicense, and/or sell copies of the Software, and to
-"     permit persons to whom the Software is furnished to do so, subject to
-"     the following conditions:
-"
-"     The above copyright notice and this permission notice shall be included
-"     in all copies or substantial portions of the Software.
-"
-"     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-"     OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-"     MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-"     IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
-"     CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
-"     TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
-"     SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-" }}}
+" AUTHOR:  Shougo Matsushita <Shougo.Matsu at gmail.com>
+" License: MIT license
 "=============================================================================
 
-let s:save_cpo = &cpo
-set cpo&vim
-
-" Global options definition. "{{{
 let g:necosyntax#min_keyword_length =
  \ get(g:, 'necosyntax#min_keyword_length', 4)
-"}}}
 
 function! necosyntax#initialize() abort
   let s:syntax_list = {}
@@ -43,7 +19,7 @@ function! necosyntax#initialize() abort
   call s:make_cache()
 endfunction
 
-function! necosyntax#gather_candidates() abort "{{{
+function! necosyntax#gather_candidates() abort
   let filetype = &filetype
   if filetype == ''
     return []
@@ -58,9 +34,9 @@ function! necosyntax#gather_candidates() abort "{{{
     let list += get(s:syntax_list, ft, [])
   endfor
   return list
-endfunction"}}}
+endfunction
 
-function! s:make_cache() abort "{{{
+function! s:make_cache() abort
   let ft = &filetype
   if ft == '' || ft ==# 'vim' || has_key(s:syntax_list, ft)
     return
@@ -68,9 +44,9 @@ function! s:make_cache() abort "{{{
 
   " Make cache from syntax list.
   let s:syntax_list[ft] = s:make_cache_from_syntax(ft)
-endfunction"}}}
+endfunction
 
-function! s:make_cache_from_syntax(filetype) abort "{{{
+function! s:make_cache_from_syntax(filetype) abort
   " Get current syntax list.
   let syntax_list = ''
   redir => syntax_list
@@ -134,9 +110,9 @@ function! s:make_cache_from_syntax(filetype) abort "{{{
   let keyword_list = s:uniq(keyword_list)
 
   return keyword_list
-endfunction"}}}
+endfunction
 
-function! s:substitute_candidate(candidate) abort "{{{
+function! s:substitute_candidate(candidate) abort
   let candidate = a:candidate
 
   " Collection.
@@ -160,9 +136,9 @@ function! s:substitute_candidate(candidate) abort "{{{
   " *
   let candidate = substitute(candidate, '\\\*', '*', 'g')
   return candidate
-endfunction"}}}
+endfunction
 
-function! necosyntax#_split_pattern(keyword_pattern, prefix) abort "{{{
+function! necosyntax#_split_pattern(keyword_pattern, prefix) abort
   let original_pattern = a:keyword_pattern
   let result_patterns = []
   let analyzing_patterns = [ '' ]
@@ -209,9 +185,9 @@ function! necosyntax#_split_pattern(keyword_pattern, prefix) abort "{{{
 
   let result_patterns += analyzing_patterns
   return map(result_patterns, 'a:prefix . v:val')
-endfunction"}}}
+endfunction
 
-function! s:match_pair(string, start_pattern, end_pattern, start_cnt) abort "{{{
+function! s:match_pair(string, start_pattern, end_pattern, start_cnt) abort
   let end = -1
   let start_pattern = '\%(' . a:start_pattern . '\)'
   let end_pattern = '\%(' . a:end_pattern . '\)'
@@ -244,9 +220,9 @@ function! s:match_pair(string, start_pattern, end_pattern, start_cnt) abort "{{{
   else
     return end
   endif
-endfunction"}}}
+endfunction
 
-function! s:uniq(list) abort "{{{
+function! s:uniq(list) abort
   let dict = {}
   for item in a:list
     if !has_key(dict, item)
@@ -255,9 +231,9 @@ function! s:uniq(list) abort "{{{
   endfor
 
   return values(dict)
-endfunction"}}}
+endfunction
 
-function! s:get_context_filetypes(filetype) abort "{{{
+function! s:get_context_filetypes(filetype) abort
   if !exists('s:exists_context_filetype')
     try
       call context_filetype#version()
@@ -270,9 +246,4 @@ function! s:get_context_filetypes(filetype) abort "{{{
   return s:exists_context_filetype
         \ && exists('*context_filetype#get_filetypes') ?
         \ context_filetype#get_filetypes(a:filetype) : [a:filetype]
-endfunction"}}}
-
-let &cpo = s:save_cpo
-unlet s:save_cpo
-
-" vim: foldmethod=marker
+endfunction
