@@ -1,4 +1,4 @@
-*necosyntax.txt*	Syntax source for neocomplete/deoplete.
+*necosyntax.txt*	Syntax source for neocomplete/deoplete/ncm.
 
 Version: 0.1
 Author: Shougo <Shougo.Matsu at gmail.com>
@@ -16,7 +16,7 @@ FAQ			|necosyntax-faq|
 ==============================================================================
 INTRODUCTION					*necosyntax-introduction*
 
-*neco-syntax* is the syntax source for neocomplete/deoplete.
+*neco-syntax* is the syntax source for neocomplete/deoplete/ncm.
 
 This source analyzes a syntax file like autoload/syntaxcomplete.vim offered by
 default, and to add to candidate completion.  The plugin can recognize
