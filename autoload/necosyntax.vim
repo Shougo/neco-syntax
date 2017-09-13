@@ -48,12 +48,14 @@ endfunction
 
 function! s:make_cache_from_syntax(filetype) abort
   " Get current syntax list.
-  let syntax_list = ''
-  redir => syntax_list
-  silent! syntax list
-  redir END
-
+  let syntax_list = s:redir('syntax list')
   if syntax_list =~ '^E\d\+' || syntax_list =~ '^No Syntax items'
+    return []
+  endif
+
+  let lines = split(syntax_list, '\n')
+  if len(lines) > 300
+    " Too long.
     return []
   endif
 
@@ -61,7 +63,7 @@ function! s:make_cache_from_syntax(filetype) abort
   let keyword_pattern = '\h\w*'
 
   let keyword_list = []
-  for line in split(syntax_list, '\n')
+  for line in lines
     if line =~ '^\h\w\+'
       " Change syntax group name.
       let group_name = matchstr(line, '^\S\+')
@@ -246,4 +248,16 @@ function! s:get_context_filetypes(filetype) abort
   return s:exists_context_filetype
         \ && exists('*context_filetype#get_filetypes') ?
         \ context_filetype#get_filetypes(a:filetype) : [a:filetype]
+endfunction
+
+function! s:redir(command) abort
+  if exists('*execute')
+    return execute(a:command)
+  endif
+
+  redir => r
+  execute 'silent!' a:command
+  redir END
+
+  return r
 endfunction
