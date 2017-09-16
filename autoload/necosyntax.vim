@@ -6,6 +6,8 @@
 
 let g:necosyntax#min_keyword_length =
  \ get(g:, 'necosyntax#min_keyword_length', 4)
+let g:necosyntax#max_syntax_lines =
+ \ get(g:, 'necosyntax#max_syntax_lines', 300)
 
 function! necosyntax#initialize() abort
   let s:syntax_list = {}
@@ -54,7 +56,7 @@ function! s:make_cache_from_syntax(filetype) abort
   endif
 
   let lines = split(syntax_list, '\n')
-  if len(lines) > 300
+  if len(lines) > g:necosyntax#max_syntax_lines
     " Too long.
     return []
   endif

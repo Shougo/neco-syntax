@@ -46,6 +46,12 @@ g:necosyntax#min_keyword_length
 
 		Default value is 4.
 
+				*g:necosyntax#max_syntax_lines*
+g:necosyntax#max_syntax_lines
+		Disable neco-syntax if |:syn-list| lines are than it.
+
+		Default value is 300.
+
 ==============================================================================
 FAQ						*necosyntax-faq*
 
