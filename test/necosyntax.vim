@@ -18,5 +18,3 @@ function! s:suite.syntax() abort
         \ '\\\%(dump\|end\|jobname\)', '')),
         \ ['\dump', '\end', '\jobname'])
 endfunction
-
-" vim:foldmethod=marker:fen:
